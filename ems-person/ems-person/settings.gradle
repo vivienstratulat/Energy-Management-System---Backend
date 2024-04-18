@@ -1,0 +1,3 @@
+rootProject.name = 'ems-person'
+println "Gradle Version: " + gradle.gradleVersion
+

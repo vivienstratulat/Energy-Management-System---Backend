@@ -1,0 +1,51 @@
+server:
+  port: 8081
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/ems
+          jwk-set-uri: http://keycloak:8080/realms/ems/protocol/openid-connect/certs
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://device_db:5432/device
+
+  flyway:
+    locations: classpath:db/migration
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+
+jwt:
+  auth:
+    converter:
+      resource-id: ems-device
+      principle-attribute: preferred_username
+
+rabbitmq:
+  host: rabbitmq
+  port: 5672
+  username: guest
+  password: guest
+
+  queue:
+    name: queue_device
+
+  exchange:
+    name: exchange_device
+
+  routingkey:
+    name: routingkey_device
+
+external:
+  webclient:
+    keycloak: http://keycloak:8080

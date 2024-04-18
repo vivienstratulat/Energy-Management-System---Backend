@@ -1,0 +1,37 @@
+server:
+  port: 8080
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8082/realms/ems
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:4040/person
+
+  flyway:
+    locations: classpath:db/migration
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+
+jwt:
+  auth:
+    converter:
+      resource-id: ems-person
+      principle-attribute: preferred_username
+
+external:
+  webclient:
+    device: http://localhost:8081
+    keycloak: http://localhost:8082

@@ -1,0 +1,70 @@
+# DataSource Configuration
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://monitor_db:5432/monitor
+
+  # Flyway Configuration
+  flyway:
+    locations: classpath:db/migration
+
+
+
+
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+# External Configuration
+external:
+  webclient:
+    device: http://localhost:8081
+    keycloak: http://localhost:8080
+
+# Custom Properties
+properties:
+  deviceId1: "8"
+  deviceId2: "4"
+
+# RabbitMQ Configuration
+rabbitmq:
+  host: rabbitmq
+  port: 5672
+  username: guest
+  password: guest
+
+  queue:
+    name: queue_d
+    name2: queue_device
+
+  exchange:
+    name: exchange_d
+    name2: exchange_device
+
+  routingkey:
+    name: routingkey_d
+    name2: routingkey_device
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/ems
+          jwk-set-uri: http://keycloak:8080/realms/ems/protocol/openid-connect/certs
+
+jwt:
+  auth:
+    converter:
+      resource-id: ems-rabby
+      principle-attribute: preferred_username
+
+
+# Server Port Configuration
+server:
+  port: 8086
